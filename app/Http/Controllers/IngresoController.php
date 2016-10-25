@@ -64,7 +64,7 @@ class IngresoController extends Controller
          
         $mytime = Carbon::now('America/Mexico_City');
          $ingreso->fecha_hora=$mytime->toDateTimeString();
-         $ingreso->impuesto='18';
+         $ingreso->impuesto='16';
          $ingreso->estado='A';
          $ingreso->save();
 
