@@ -97,7 +97,7 @@ class ArticuloController extends Controller
         $articulo->stock_actual=$request->get('stock_actual');
         $articulo->stock_max=$request->get('stock_max');
         $articulo->descripcion=$request->get('descripcion');
-        
+        $articulo->estado='Activo';
 
         if(Input::hasFile('imagen')){
 
@@ -112,11 +112,10 @@ class ArticuloController extends Controller
     public function destroy($id)
     {
         $articulo=Articulo::findOrFail($id);
-        $articulo->condicion='0';
+        $articulo->Estado='Inactivo';
         $articulo->update();
         return Redirect::to('almacen/articulo');
     }
-
 
 
 }

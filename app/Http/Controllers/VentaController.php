@@ -121,6 +121,7 @@ class VentaController extends Controller
              ->get();
         return view("ventas.venta.show",["venta"=>$venta,"detalles"=>$detalles]);
     }
+    
 
     public function destroy($id)
     {
