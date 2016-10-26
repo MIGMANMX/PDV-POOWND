@@ -67,7 +67,7 @@
 	        	<label>Articulo</label>
 	        	<select name="pidarticulo" class="form-control selectpicker" id="pidarticulo"  data-live-search="true">
 	        		@foreach($articulos as $articulo)
-	        		<option value="{{$articulo->idarticulo}}_{{$articulo->stock}}_{{$articulo->precio_promedio}}">{{$articulo->articulo}}</option>
+	        		<option value="{{$articulo->idarticulo}}_{{$articulo->stock_actual}}_{{$articulo->precio_promedio}}">{{$articulo->articulo}}</option>
 	        		@endforeach
 	        	</select>
 	        	</div>
@@ -160,9 +160,9 @@
 
 
 					  function mostrarValores(){
-					  	datosArticulos=document.getElementById('pidarticulo').value.split('_');
-					  	$("#pprecio_venta").val(datosArticulos[2]);
-					  		$("#pstock_actual").val(datosArticulos[1]);
+					  	datosArticulo=document.getElementById('pidarticulo').value.split('_');
+					  	$("#pprecio_venta").val(datosArticulo[2]);
+					  		$("#pstock_actual").val(datosArticulo[1]);
 
 
 
@@ -170,27 +170,43 @@
 
 
 					  function agregar(){
-					  	idarticulo=$("#pidarticulo").val();
+
+					  	datosArticulos=document.getElementById('pidarticulo').value.split('_');
+
+
+					  	idarticulo=datosArticulo[0];
 					  	articulo=$("#pidarticulo option:selected").text();
 					  	cantidad=$("#pcantidad").val();
+
+					  	descuento=$("#pdescuento").val();
+
 					  	precio_compra=$("#pprecio_compra").val();
-					  	precio_venta=$("#pprecio_venta").val();
+					  	stock_actual=$("#stock_actual").val();
 
 
-					  	if(idarticulo!="" && cantidad!="" && cantidad>0 && precio_compra!="" && precio_venta!=""){
+					  	if(idarticulo!="" && cantidad!="" && cantidad>0 && descuento!="" && precio_venta!="")
+					  	{
+					  		if(stock_actual>=cantidad)
+					  		{
 
-					  		subtotal[cont]=(cantidad*precio_compra);
-					  		total=total+subtotal[cont];
+						  		subtotal[cont]=(cantidad*precio_venta-descuento);
+						  		total=total+subtotal[cont];
 
 
-					  		var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precio_compra[]" value="'+precio_compra+'"></td><td><input type="number" name="precio_venta[]" value="'+precio_venta+'"></td><td>'+subtotal[cont]+'</td></tr>';
+						  		var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precio_venta[]" value="'+precio_venta+'"></td><td><input type="number" name="descuento[]" value="'+descuento+'"></td><td>'+subtotal[cont]+'</td></tr>';
 
-					  		cont++;
-					  		limpiar();
-					  		$("#total").html("$  "+total);
-					  		evaluar();
-					  		$('#detalles').append(fila);
+						  		cont++;
+						  		limpiar();
+						  		$("#total").html("$  "+total);
+						  		$("#total_venta").val(total);
+						  		evaluar();
+						  		$('#detalles').append(fila);
+					  		}
+					  		else
+					  		{
+					  			alert("La cantidad supera al stock actual");
 
+					  		}
 					  	}
 					  	else
 					  	{
@@ -204,7 +220,7 @@
 					  
 					  function limpiar(){
 					    $("#pcantidad").val("");
-					    $("#pprecio_compra").val("");
+					    $("#pdescuento").val("0");
 					    $("#pprecio_venta").val("");
 					  }
 
@@ -222,7 +238,8 @@
 
 					   function eliminar(index){
 					    total=total-subtotal[index]; 
-					    $("#total").html("$ " + total);   
+					    $("#total").html("$ " + total);
+					    $("#total_venta").val(total);   
 					    $("#fila" + index).remove();
 					    evaluar();
 
