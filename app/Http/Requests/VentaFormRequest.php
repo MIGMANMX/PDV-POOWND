@@ -25,7 +25,7 @@ class VentaFormRequest extends Request
     {
         return [
             'idcliente'=>'required',
-            'idusuarios'=>'required',
+           
             'tipo_comprobante'=>'required|max:20',
             'serie_comprobante'=>'max:7',
             'num_comprobante'=>'required|max:10',

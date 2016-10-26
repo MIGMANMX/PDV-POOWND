@@ -147,103 +147,91 @@
 			@push('scripts')
 			<script >			
 				$(document).ready(function(){
-					    $('#bt_add').click(function(){
-					      agregar();
-					    });
-					  });
+ $('#bt_add').click(function(){
+  agregar();
+ });
+});
 
-					  var cont=0;
-					  total=0;
-					  subtotal=[];
-					  $("#guardar").hide();
-					  $("#pidarticulo").change(mostrarValores);
-
-
-					  function mostrarValores(){
-					  	datosArticulo=document.getElementById('pidarticulo').value.split('_');
-					  	$("#pprecio_venta").val(datosArticulo[2]);
-					  		$("#pstock_actual").val(datosArticulo[1]);
+var cont = 0;
+total = 0;
+subtotal = [];
+$("#guardar").hide();
+$("#pidarticulo").change(mostrarValores);
 
 
-
-					  }
-
-
-					  function agregar(){
-
-					  	datosArticulos=document.getElementById('pidarticulo').value.split('_');
-
-
-					  	idarticulo=datosArticulo[0];
-					  	articulo=$("#pidarticulo option:selected").text();
-					  	cantidad=$("#pcantidad").val();
-
-					  	descuento=$("#pdescuento").val();
-
-					  	precio_compra=$("#pprecio_compra").val();
-					  	stock_actual=$("#stock_actual").val();
+					  function mostrarValores()
+					  {
+ datosArticulo=document.getElementById('pidarticulo').value.split('_');
+ $("#pprecio_venta").val(datosArticulo[2]);
+ $("#pstock_actual").val(datosArticulo[1]);
+}
 
 
-					  	if(idarticulo!="" && cantidad!="" && cantidad>0 && descuento!="" && precio_venta!="")
-					  	{
-					  		if(stock_actual>=cantidad)
-					  		{
+	function agregar()
+{
+ datosArticulo=document.getElementById('pidarticulo').value.split('_');
 
-						  		subtotal[cont]=(cantidad*precio_venta-descuento);
-						  		total=total+subtotal[cont];
+ idarticulo=datosArticulo[0];
+ articulo=$("#pidarticulo option:selected").text();
+ cantidad=$("#pcantidad").val();
 
+ descuento=$("#pdescuento").val();
+ precio_venta=$("#pprecio_venta").val();
+ stock_actual=$("#pstock_actual").val();
 
-						  		var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precio_venta[]" value="'+precio_venta+'"></td><td><input type="number" name="descuento[]" value="'+descuento+'"></td><td>'+subtotal[cont]+'</td></tr>';
+ if (idarticulo!="" && cantidad!="" && cantidad>0 && descuento!="" && precio_venta!="")
+ {
+  if (stock_actual >= cantidad)
+  {
+   subtotal[cont]=(cantidad * precio_venta - descuento);
+   total=total + subtotal[cont];
 
-						  		cont++;
-						  		limpiar();
-						  		$("#total").html("$  "+total);
-						  		$("#total_venta").val(total);
-						  		evaluar();
-						  		$('#detalles').append(fila);
-					  		}
-					  		else
-					  		{
-					  			alert("La cantidad supera al stock actual");
-
-					  		}
-					  	}
-					  	else
-					  	{
-					  		alert("Error al ingresar, revisa los datos del articulo");
-					  	}
-
-
-
-					  }
-
-					  
-					  function limpiar(){
-					    $("#pcantidad").val("");
-					    $("#pdescuento").val("0");
-					    $("#pprecio_venta").val("");
-					  }
+   var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precio_venta[]" value="'+precio_venta+'"></td><td><input type="number" name="descuento[]" value="'+descuento+'"></td><td>'+subtotal[cont]+'</td></tr>';
+   cont++;
+   limpiar();
+   $("#total").html("$ " + total);
+   $("#total_venta").val(total);
+   evaluar();
+   $('#detalles').append(fila);
+  }
+  else
+  {
+   alert('La cantidad a vender supera el stock');
+  }
+ }
+ else
+ {
+  alert("Error al ingresar el detalle de la venta, revise los datos del articulo");
+ }
+}
+				
+function limpiar()
+{
+ $("#pcantidad").val("");
+ $("#pdescuento").val("");
+ $("#pprecio_venta").val("");
+}
 
 					  function evaluar()
-					  {
-					    if (total>0)
-					    {
-					      $("#guardar").show();
-					    }
-					    else
-					    {
-					      $("#guardar").hide(); 
-					    }
-					   }
+{
+ if (total > 0)
+ {
+  $("#guardar").show();
+ }
+ else
+ {
+  $("#guardar").hide();
+ }
+}
 
-					   function eliminar(index){
-					    total=total-subtotal[index]; 
-					    $("#total").html("$ " + total);
-					    $("#total_venta").val(total);   
-					    $("#fila" + index).remove();
-					    evaluar();
-
-					  }
+					   function eliminar(index)
+{
+ total=total - subtotal[index];
+ $("#total").html("$ " + total);
+ $("#total_venta").val(total);
+ $("#fila" + index).remove();
+ evaluar();
+}
 
 
 			</script>
