@@ -23,8 +23,9 @@ class VentaController extends Controller
     //
     public function __construct()
     {
-
+    $this->middleware('auth');
     }
+
     public function index(Request $request)
     {
         if ($request)
@@ -33,8 +34,9 @@ class VentaController extends Controller
            $ventas=DB::table('venta as v')
             ->join('persona as p','v.idcliente','=','p.idpersona')
             ->join('detalle_venta as dv','v.idventa','=','dv.idventa')
-            ->join('usuarios as us','v.idusuarios','=','us.idusuarios')
-            ->select('v.idventa','v.idusuarios ','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado','v.total_venta')
+           // ->join('usuarios as us','v.idusuarios','=','us.idusuarios')
+            ->select('v.idventa'//,'v.idusuarios '
+                ,'v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado','v.total_venta')
             ->where('v.num_comprobante','LIKE','%'.$query.'%')
             ->orderBy('v.idventa','desc')
             ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado')
@@ -65,7 +67,7 @@ class VentaController extends Controller
         	DB::beginTransaction();
         	$venta=new Venta;
 	        $venta->idcliente=$request->get('idcliente'); 
-	        $venta->idusuarios=$request->get('idusuarios');
+	       // $venta->idusuarios=$request->get('idusuarios');
 	        $venta->tipo_comprobante=$request->get('tipo_comprobante');
 	        $venta->serie_comprobante=$request->get('serie_comprobante');
 	        $venta->num_comprobante=$request->get('num_comprobante');
