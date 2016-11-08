@@ -54,11 +54,12 @@
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    
+                     <img src="http://poownd.mx/images/lobo.png" class="img-thumbnail" alt="User Image">
                     <p>
-                      
-                      <small>POOWND</small>
+                      POOWND
+                      <small>PUNTO DE VENTA</small>
                     </p>
+
                   </li>
                   
                   <!-- Menu Footer-->
@@ -129,7 +130,7 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="../../configuracion/usuario"><i class="fa fa-circle-o"></i> Usuarios</a></li>
+                <li><a href="../../seguridad/usuario"><i class="fa fa-circle-o"></i> Usuarios</a></li>
                 
               </ul>
             </li>
@@ -182,6 +183,7 @@
                 <center><div class="col-md-12" >
              
                   <img class="img-thumbnail" src="{{asset('img/Banner.png')}}"  width="680">
+                  
                 </div></center>
                       <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>

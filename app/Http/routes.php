@@ -28,6 +28,7 @@ Route::resource('ventas/venta','VentaController');
 Route::resource('compras/proveedor','ProveedorController');
 
 Route::resource('compras/ingreso','IngresoController');
+Route::resource('seguridad/usuario','UsuarioController');
 
 Route::auth();
 
