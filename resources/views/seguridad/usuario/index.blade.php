@@ -19,7 +19,7 @@
 				</thead>
                @foreach ($usuarios as $usu)
 				<tr>
-					<td>{{ $usu->id}</td>
+					<td>{{ $usu->id}}</td>
 					<td>{{ $usu->name}}</td>
 					<td>{{ $usu->email}}</td>
 					<td>
